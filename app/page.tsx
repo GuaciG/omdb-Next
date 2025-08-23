@@ -1,103 +1,127 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import MovieCard from "./MovieCard";
+
+type UiMovie = {
+  id: string;
+  title: string;
+  year: string;
+  poster: string;
+};
+
+export default function SearchPage() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const initialQ = searchParams.get("q") || "";
+
+  const [q, setQ] = useState(initialQ);
+  const [results, setResults] = useState<UiMovie[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchResults = async (term: string) => {
+    
+    if (!term) {
+      setResults([]);
+      setError("Type a word to search for your movie.");
+      return;
+    }
+    try {
+      setLoading(true);
+      setError(null);
+      const res = await fetch(`/api/search?q=${encodeURIComponent(term)}`, { 
+        cache: "no-store" 
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Search error. Try again later.");
+      setResults(data.items || []);
+      if ((data.items || []).length === 0) setError("No results. Try another word.");
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Hacer búsqueda automática si hay ?q en la URL
+  useEffect(() => {
+    if (initialQ) {
+      fetchResults(initialQ);
+    }
+  }, [initialQ]);
+
+  const onSearch = () => {
+    if (!q.trim()) return;
+    router.push(`/?q=${encodeURIComponent(q)}`);
+    fetchResults(q);
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      onSearch();
+    }
+  };
+
+  const clearSearch = () => {
+    setQ("");
+    setResults([]);
+    setError(null);
+    router.push("/");
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <main className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto p-4 sm:p-6">
+      <h1 className="text-4xl text-center font-bold my-4">Movie Searcher<span className="block">🍿🥤🎬</span></h1>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      <div className="w-full flex flex-col md:flex-row gap-2 items-center mb-6 bg-gray-900 p-3 rounded-xl shadow-lg">
+        <input
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          onKeyDown={onKeyDown}
+          placeholder="Type a word (e.g. matrix, ring, star)"
+          className="w-full md:flex-1 p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
+        <div className="flex gap-2 w-full md:w-auto">
+          <button
+            onClick={onSearch}
+            disabled={loading}
+            className="w-1/2 px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold uppercase"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            Search
+          </button>
+          <button
+            onClick={clearSearch}
+            disabled={loading}
+            className="w-1/2 px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold uppercase"
           >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+            Clear
+          </button>
+          <button
+            onClick={clearSearch}
+            disabled={loading}
+            className="w-1/2 px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold uppercase"
+          >
+            Favorites
+          </button>
+        </div>  
+      </div>
+      <div>
+        <p>This is a very easy-to-use app that allows you to search for any movie by typing any word in its title. This type of app can be used to search for books, recipes, or other items included in an API. Press the &apos;Back&apos; button and the search will remain.</p>
+      </div>
+
+      {error && <p className="text-red-400 mb-4">{error}</p>}
+      {loading && <p>Give me a second…</p>}
+
+      {!loading && results.length > 0 && (
+        <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          {results.map((m) => (
+            <MovieCard key={m.id} movie={m} query={q} />
+          ))}
+        </section>
+      )}
+    </main>
   );
 }
