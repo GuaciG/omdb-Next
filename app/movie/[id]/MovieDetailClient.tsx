@@ -1,14 +1,19 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Movie {
+  id: string;
   title: string;
   year: string;
   genre: string;
   plot: string;
   poster: string;
+  actors: string;
+  director: string;
+  rating: string;
+  runtime: string;
 }
 
 
@@ -17,9 +22,41 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
+  
   const [imgDetailError, setImgDetailError] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  
   const posterDetailOk = movie.poster && movie.poster !== "N/A" && !imgDetailError;
 
+  // ✅ Revisar favoritos al cargar
+  useEffect(() => {
+    const saved = localStorage.getItem("favoriteMovies");
+    if (saved) {
+      const favorites = JSON.parse(saved);
+      setIsFavorite(favorites.some((m: Movie) => m.id === movie.id));
+    }
+  }, [movie.id]);
+
+  // ✅ Guardar/Eliminar de favoritos
+  const toggleFavorite = () => {
+    const saved = localStorage.getItem("favoriteMovies");
+    const current: Movie[] = saved ? JSON.parse(saved) : [];
+
+    const exists = current.find((m) => m.id === movie.id);
+    let updated: Movie[];
+
+    if (exists) {
+      updated = current.filter((m) => m.id !== movie.id);
+      setIsFavorite(false);
+    } else {
+      updated = [...current, movie];
+      setIsFavorite(true);
+    }
+
+    localStorage.setItem("favoriteMovies", JSON.stringify(updated));
+  };
+  
+  
   return (
     <div className="p-4 w-full">
       <button
@@ -58,12 +95,29 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
             </div>
           )}
         </div>
-        <div className="w-full bg-gray-950 p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold">{movie.title}</h1>
-          <p>{movie.year}</p>
-          <p>{movie.genre}</p>
-          <p>{movie.plot}</p>
+        <div className="w-full bg-gray-950 p-6 rounded-lg shadow-md relative">
+          <h1 className="text-2xl font-bold pb-2">{movie.title}</h1>
+          <p><span className="text-gray-400">Release Year: </span>{movie.year}</p>
+          <p><span className="text-gray-400">Genre: </span>{movie.genre}</p>
+          <p><span className="text-gray-400">Runtime: </span>{movie.runtime}</p>
+          <p><span className="text-gray-400">Director: </span>{movie.director}</p>
+          <p><span className="text-gray-400">Actors: </span>{movie.actors}</p>
+          <p><span className="text-gray-400">Synopsis: </span>{movie.plot}</p>
+          <p><span className="text-gray-400">Rating: </span>{movie.rating}</p>
+          <div className="absolute top-3 right-3 group">
+            <button
+              onClick={toggleFavorite}
+              className="p-2 rounded-full text-white bg-gray-700 cursor-pointer"
+            >
+              {isFavorite ? "❤️" : "🤍"}
+            </button>
+            
+            <span className="absolute bottom-11 right-1 scale-0 group-hover:scale-100 transition-transform w-[140px] bg-black text-white text-center text-xs px-2 py-1 rounded-md shadow-lg">
+              {isFavorite ? "Remove from favorites" : "Add to favorites"}
+            </span>
+          </div>
         </div>
+        
       </div>
     </div>
   );

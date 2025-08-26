@@ -21,5 +21,9 @@ export async function getMovie(id: string) {
     genre: data.Genre,
     plot: data.Plot,
     poster: data.Poster,
+    actors: data.Actors,
+    director: data.Director,
+    rating: data.Rating,
+    runtime: data.Runtime,
   };
 }

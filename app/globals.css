@@ -20,7 +20,7 @@
 }
 
 body {
-  background-color: var(--background);
+  background-color: var(--foreground);
   background: url("https://res.cloudinary.com/drpcjt13x/image/upload/v1755798969/photo-cinema_vvpexz.jpg")
     no-repeat center center fixed;
   background-size: cover;

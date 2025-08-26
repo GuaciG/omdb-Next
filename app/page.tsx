@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import MovieCard from "./MovieCard";
+import IntroNote from "./IntroNote";
 
 type UiMovie = {
   id: string;
@@ -100,17 +101,15 @@ export default function SearchPage() {
             Clear
           </button>
           <button
-            onClick={clearSearch}
-            disabled={loading}
-            className="w-1/2 px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold uppercase"
+            onClick={() => router.push("/favorites")}
+            className="w-1/2 px-4 py-3 rounded-lg bg-red-900 hover:bg-red-950 text-white font-semibold uppercase cursor-pointer"
           >
             Favorites
           </button>
         </div>  
       </div>
-      <div>
-        <p>This is a very easy-to-use app that allows you to search for any movie by typing any word in its title. This type of app can be used to search for books, recipes, or other items included in an API. Press the &apos;Back&apos; button and the search will remain.</p>
-      </div>
+      
+      <IntroNote />
 
       {error && <p className="text-red-400 mb-4">{error}</p>}
       {loading && <p>Give me a second…</p>}

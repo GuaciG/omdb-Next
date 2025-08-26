@@ -4,6 +4,10 @@ export interface OmdbSearchItem {
   imdbID: string;
   Type: string;
   Poster: string; // "N/A" si no hay
+  Actors: string;
+  Director: string;
+  Rating: string;
+  Runtime: string;
 }
 
 export interface OmdbSearchResponse {
@@ -19,6 +23,10 @@ export interface OmdbMovieDetail {
   Genre: string;
   Plot: string;
   Poster: string; // "N/A" si no hay
+  Actors: string;
+  Director: string;
+  Rating: string; 
+  Runtime: string;
   Response: 'True' | 'False';
   Error?: string;
   [key: string]: string | undefined;

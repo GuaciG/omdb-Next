@@ -8,9 +8,11 @@ interface Props {
 
 export default async function MoviePage({ params }: Props) {
   const { id } = params;
-  const movie = await getMovie(id);
+  const movieData = await getMovie(id);
 
-  if (!movie) notFound();
+  if (!movieData) notFound();
+
+  const movie = { ...movieData, id };
 
   return <MovieDetailClient movie={movie} />;
 }
