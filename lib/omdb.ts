@@ -23,7 +23,5 @@ export async function getMovie(id: string) {
     poster: data.Poster,
     actors: data.Actors,
     director: data.Director,
-    rating: data.Rating,
-    runtime: data.Runtime,
   };
 }

@@ -6,8 +6,6 @@ export interface OmdbSearchItem {
   Poster: string; // "N/A" si no hay
   Actors: string;
   Director: string;
-  Rating: string;
-  Runtime: string;
 }
 
 export interface OmdbSearchResponse {
@@ -24,9 +22,7 @@ export interface OmdbMovieDetail {
   Plot: string;
   Poster: string; // "N/A" si no hay
   Actors: string;
-  Director: string;
-  Rating: string; 
-  Runtime: string;
+  Director: string; 
   Response: 'True' | 'False';
   Error?: string;
   [key: string]: string | undefined;

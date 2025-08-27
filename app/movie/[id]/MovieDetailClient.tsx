@@ -12,13 +12,11 @@ interface Movie {
   poster: string;
   actors: string;
   director: string;
-  rating: string;
-  runtime: string;
 }
 
 
 export default function MovieDetailClient({ movie }: { movie: Movie }) {
-  //console.log("🎬 Movie en cliente:", movie);
+  //console.log("Movie in client:", movie);
   const router = useRouter();
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
@@ -28,7 +26,7 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
   
   const posterDetailOk = movie.poster && movie.poster !== "N/A" && !imgDetailError;
 
-  // ✅ Revisar favoritos al cargar
+  // check if is favorite
   useEffect(() => {
     const saved = localStorage.getItem("favoriteMovies");
     if (saved) {
@@ -37,7 +35,7 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
     }
   }, [movie.id]);
 
-  // ✅ Guardar/Eliminar de favoritos
+  // store/remove from favorites
   const toggleFavorite = () => {
     const saved = localStorage.getItem("favoriteMovies");
     const current: Movie[] = saved ? JSON.parse(saved) : [];
@@ -99,11 +97,9 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
           <h1 className="text-2xl font-bold pb-2">{movie.title}</h1>
           <p><span className="text-gray-400">Release Year: </span>{movie.year}</p>
           <p><span className="text-gray-400">Genre: </span>{movie.genre}</p>
-          <p><span className="text-gray-400">Runtime: </span>{movie.runtime}</p>
           <p><span className="text-gray-400">Director: </span>{movie.director}</p>
           <p><span className="text-gray-400">Actors: </span>{movie.actors}</p>
           <p><span className="text-gray-400">Synopsis: </span>{movie.plot}</p>
-          <p><span className="text-gray-400">Rating: </span>{movie.rating}</p>
           <div className="absolute top-3 right-3 group">
             <button
               onClick={toggleFavorite}

@@ -1,7 +1,7 @@
 'use client';
-
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Search, X } from "lucide-react";
 import MovieCard from "./MovieCard";
 import IntroNote from "./IntroNote";
 
@@ -75,42 +75,49 @@ export default function SearchPage() {
 
   return (
     <main className="flex flex-col items-center justify-center w-full max-w-6xl mx-auto p-4 sm:p-6">
-      <h1 className="text-4xl text-center font-bold my-4">Movie Searcher<span className="block">🍿🥤🎬</span></h1>
+      <IntroNote />
 
-      <div className="w-full flex flex-col md:flex-row gap-2 items-center mb-6 bg-gray-900 p-3 rounded-xl shadow-lg">
-        <input
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          onKeyDown={onKeyDown}
-          placeholder="Type a word (e.g. matrix, ring, star)"
-          className="w-full md:flex-1 p-3 rounded-lg border border-gray-700 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-        <div className="flex gap-2 w-full md:w-auto">
+      <h1 className="text-4xl text-center font-bold mt-4 mb-6">Movie Finder
+        <span className="block mt-4">🍿🥤🎬</span>
+      </h1>
+
+      <div className="w-full flex flex-col md:flex-row items-center gap-2 mb-6 bg-gray-900 p-3 rounded-xl shadow-lg">
+        
+        <div className="relative w-full flex-1 flex">
+          <input
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            onKeyDown={onKeyDown}
+            placeholder="Type a word (e.g. matrix, ring, star)"
+            className="w-full p-3 pr-20 rounded-lg border border-gray-700 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          {q && (
+            <button
+              onClick={clearSearch}
+              disabled={loading}
+              className="absolute right-15 top-1/2 -translate-y-1/2 p-1 rounded-full border border-gray-600 hover:bg-gray-600 text-gray-400"
+            >
+              <X className="w-4 h-4 cursor-pointer" size={16} />
+            </button>
+          )}          
           <button
             onClick={onSearch}
             disabled={loading}
-            className="w-1/2 px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold uppercase"
+            className=" absolute right-0 top-0 bottom-0 py-2 px-3 rounded-r-md bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white"
           >
-            Search
+            <Search className="w-7 h-7 cursor-pointer" />
           </button>
-          <button
-            onClick={clearSearch}
-            disabled={loading}
-            className="w-1/2 px-4 py-3 rounded-lg bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white font-semibold uppercase"
-          >
-            Clear
-          </button>
-          <button
-            onClick={() => router.push("/favorites")}
-            className="w-1/2 px-4 py-3 rounded-lg bg-red-900 hover:bg-red-950 text-white font-semibold uppercase cursor-pointer"
-          >
-            Favorites
-          </button>
-        </div>  
+        </div>
+        
+        <button
+          onClick={() => router.push("/favorites")}
+          className="w-full md:w-1/5 px-4 py-3 rounded-lg bg-red-900 hover:bg-red-950 text-white font-semibold uppercase cursor-pointer"
+        >
+          Favorites
+        </button>
+
       </div>
       
-      <IntroNote />
-
       {error && <p className="text-red-400 mb-4">{error}</p>}
       {loading && <p>Give me a second…</p>}
 

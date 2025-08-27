@@ -23,16 +23,16 @@ export default function IntroNote() {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm animate-fadeIn">
       <div className="relative max-w-xl w-[90%] bg-gradient-to-r from-purple-800 to-indigo-900 text-white p-10 rounded-2xl shadow-2xl text-center">
-        {/* Botón X arriba a la derecha */}
+        
         <button
           onClick={handleCloseNote}
-          className="absolute top-3 right-3 text-white bg-red-500 hover:bg-red-600 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold shadow-md cursor-pointer"
+          className="absolute top-3 right-3 text-white bg-red-500 hover:bg-red-600 w-7 h-7 rounded-full flex items-center justify-center text-2xl font-light shadow-md cursor-pointer"
           title="Close"
         >
           ×
         </button>
 
-        <h2 className="text-2xl font-bold mb-3">🎬 Bienvenido a Movie Finder</h2>
+        <h2 className="text-2xl font-bold mb-3">🎬 Welcome to Movie Finder</h2>
         <p className="text-lg leading-relaxed">
           This is a very easy-to-use app.  
           It allows you to search for any movie by typing any word in its title.  
@@ -41,7 +41,7 @@ export default function IntroNote() {
           <br/>✅Once you have marked some movies as favorites, you can view them by clicking the{" "}
           <span className="text-sm px-2 py-2 rounded-lg bg-red-900 text-white font-semibold uppercase">Favorites</span> button. 
           <br/>✅Press the &apos;Back&apos; button there and you will come back to your search again 🔎. 
-          <br />👉This type of app can be used to search for books, recipes, or other items included in an API.
+          <br />👉This type of app can be used to search for books, cooking recipes, or other items included in an API.
         </p>
       </div>
     </div>

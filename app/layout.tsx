@@ -2,7 +2,7 @@ import "./globals.css";
 
 export const metadata = {
   title: "OMDb Next App",
-  description: "Buscador de películas con OMDb y Next.js + Tailwind",
+  description: "Movie Finder with OMDb and Next.js + Tailwind",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
