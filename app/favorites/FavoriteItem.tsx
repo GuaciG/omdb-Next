@@ -14,9 +14,10 @@ export interface UiMovie {
 interface FavoriteItemProps {
   movie: UiMovie;
   onRemove: (id: string) => void;
+  q?: string;
 }
 
-export default function FavoriteItem({ movie, onRemove }: FavoriteItemProps) {
+export default function FavoriteItem({ movie, onRemove, q }: FavoriteItemProps) {
   const [imgError, setImgError] = useState(false);
   const posterOk = movie.poster && movie.poster !== "N/A";
 
@@ -25,13 +26,13 @@ export default function FavoriteItem({ movie, onRemove }: FavoriteItemProps) {
       <button
         onClick={() => onRemove(movie.id)}
         className="absolute top-1 right-1 z-10 w-6 h-6 flex items-center justify-center bg-red-600 text-white rounded-full text-sm group-hover:opacity-100 transition cursor-pointer"
-        title="Eliminar"
+        title="Remove"
       >
         ×
       </button>
 
       <Link
-        href={`/movie/${movie.id}`}
+        href={`/movie/${movie.id}?from=favorites${q ? `&q=${encodeURIComponent(q)}` : ""}`}
         className="block bg-gray-900 border border-gray-700 rounded-xl overflow-hidden shadow-lg hover:scale-105 transform transition"
       >
         <div className="relative w-full pt-[150%]">

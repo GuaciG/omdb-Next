@@ -13,6 +13,7 @@ type UiMovie = {
 };
 
 export default function SearchPage() {
+
   const searchParams = useSearchParams();
   const router = useRouter();
   const initialQ = searchParams.get("q") || "";
@@ -46,7 +47,7 @@ export default function SearchPage() {
     }
   };
 
-  // Hacer búsqueda automática si hay ?q en la URL
+  // fetch results if there's an initial query
   useEffect(() => {
     if (initialQ) {
       fetchResults(initialQ);
@@ -110,7 +111,7 @@ export default function SearchPage() {
         </div>
         
         <button
-          onClick={() => router.push("/favorites")}
+          onClick={() => router.push(`/favorites${q ? `?q=${encodeURIComponent(q)}` : ""}`)}
           className="w-full md:w-1/5 px-4 py-3 rounded-lg bg-red-900 hover:bg-red-950 text-white font-semibold uppercase cursor-pointer"
         >
           Favorites
@@ -122,7 +123,7 @@ export default function SearchPage() {
       {loading && <p>Give me a second…</p>}
 
       {!loading && results.length > 0 && (
-        <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+        <section className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {results.map((m) => (
             <MovieCard key={m.id} movie={m} query={q} />
           ))}

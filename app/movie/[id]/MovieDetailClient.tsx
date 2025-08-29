@@ -14,12 +14,12 @@ interface Movie {
   director: string;
 }
 
-
 export default function MovieDetailClient({ movie }: { movie: Movie }) {
   //console.log("Movie in client:", movie);
   const router = useRouter();
   const searchParams = useSearchParams();
   const q = searchParams.get("q") || "";
+  const from = searchParams.get("from") || "";
   
   const [imgDetailError, setImgDetailError] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -59,10 +59,14 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
     <div className="p-4 w-full">
       <button
         onClick={() => {
-          if (q) {
+          if (from === "favorites") {
+            // if you came from Favorites → go back to Favorites (with ?q if any)
+            router.push(q ? `/favorites?q=${encodeURIComponent(q)}` : "/favorites");
+          } else if (q) {
+            // if no from Favorites but with ?q → go back to Search with ?q
             router.push(`/?q=${encodeURIComponent(q)}`);
-          }
-          else { 
+          } else {
+            // else go back to Home
             router.push("/");
           }
         }}
@@ -106,14 +110,12 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
               className="p-2 rounded-full text-white bg-gray-700 cursor-pointer"
             >
               {isFavorite ? "❤️" : "🤍"}
-            </button>
-            
+            </button>            
             <span className="absolute bottom-11 right-1 scale-0 group-hover:scale-100 transition-transform w-[140px] bg-black text-white text-center text-xs px-2 py-1 rounded-md shadow-lg">
               {isFavorite ? "Remove from favorites" : "Add to favorites"}
             </span>
           </div>
-        </div>
-        
+        </div>        
       </div>
     </div>
   );
