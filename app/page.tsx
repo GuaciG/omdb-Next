@@ -38,8 +38,15 @@ export default function SearchPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Search error. Try again later.");
-      setResults(data.items || []);
-      if ((data.items || []).length === 0) setError("No results. Try another word.");
+      
+      const uniqueResults = (data.items || []).filter(
+        (movie: UiMovie, index: number, self: UiMovie[]) =>
+          index === self.findIndex((m) => m.id === movie.id)
+      );
+
+      setResults(uniqueResults);
+        
+      if (uniqueResults === 0) setError("No results. Try another word.");
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Unexpected error occurred.");
     } finally {
@@ -122,13 +129,21 @@ export default function SearchPage() {
       {error && <p className="text-red-400 mb-4">{error}</p>}
       {loading && <p>Give me a second…</p>}
 
-      {!loading && results.length > 0 && (
-        <section className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
-          {results.map((m) => (
-            <MovieCard key={m.id} movie={m} query={q} />
-          ))}
-        </section>
-      )}
+      {!loading && results.length > 0 && (() => {
+        // Elimina duplicados antes de renderizar
+        const uniqueResults = results.filter(
+          (movie, index, self) =>
+            index === self.findIndex((m) => m.id === movie.id)
+        );
+
+        return (
+          <section className="w-full grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+            {uniqueResults.map((m) => (
+              <MovieCard key={m.id} movie={m} query={q} />
+            ))}
+          </section>
+        );
+      })()}
     </main>
   );
 }

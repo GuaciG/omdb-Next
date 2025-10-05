@@ -1,36 +1,27 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Movie App with Nextjs 15 and deployed on Vercel
 
-## Getting Started
+A very easy to use app where you can search for movies using a search engine. Type any word that contains the title and hit search. All movies related to that word will appear.
 
-First, run the development server:
+## Onboarding 
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+When you visit this page for the first time, an overlay with instructions for use will show. Close this window and it will not appear again in the future.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+![Movie App Film](https://res.cloudinary.com/drpcjt13x/image/upload/v1759693409/Proyectos/OMDb%20Next%20API/Captura_de_pantalla_336_idqfob.png)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Step 1
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![Movie App Film](https://res.cloudinary.com/drpcjt13x/image/upload/v1759693410/Proyectos/OMDb%20Next%20API/Captura_de_pantalla_341_girnye.png)
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## Step 2
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Clicking on each movie will navigate to another page with further information and details about it.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+![Movie App Blog](https://res.cloudinary.com/drpcjt13x/image/upload/v1759693410/Proyectos/OMDb%20Next%20API/Captura_de_pantalla_339_uscg0n.png)
 
-## Deploy on Vercel
+## Step 3
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Each movie list will have a heart so you can add it to your favorites list. View your collection of favorite movies by clicking the "Favorites" button. There you can delete them individually or delete them all directly with the "Clear All" button.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![Movie App Blog Comments](https://res.cloudinary.com/drpcjt13x/image/upload/v1759693410/Proyectos/OMDb%20Next%20API/Captura_de_pantalla_340_rmq6xj.png)
+
