@@ -89,7 +89,7 @@ export default function SearchPage() {
             value={q}
             onChange={(e) => setQ(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder="Type a word (e.g. matrix, ring, star)"
+            placeholder="Type a word from the title of the movie (e.g. matrix, ring, star)"
             className="w-full p-3 pr-20 rounded-lg border border-gray-700 bg-gray-800 text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
           {q && (

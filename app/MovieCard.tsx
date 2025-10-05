@@ -48,7 +48,7 @@ export default function MovieCard({ movie, query }: { movie: UiMovie; query: str
       <Link
         key={movie.id}
         href={`/movie/${movie.id}?q=${encodeURIComponent(query)}`}
-        className="block"
+        className="block h-full"
       >
         <div className="relative w-full pt-[150%]">
           {posterOk && !imgError ? (
