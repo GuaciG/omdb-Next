@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { getMovie } from "@/lib/omdb";
 import MovieDetailClient from "./MovieDetailClient";
@@ -11,5 +12,9 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
 
   const movie = { ...movieData, id };
 
-  return <MovieDetailClient movie={movie} />;
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <MovieDetailClient movie={movie} />
+    </Suspense>
+  )
 }

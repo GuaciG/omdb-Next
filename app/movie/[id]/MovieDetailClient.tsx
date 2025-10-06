@@ -41,17 +41,12 @@ export default function MovieDetailClient({ movie }: { movie: Movie }) {
     const current: Movie[] = saved ? JSON.parse(saved) : [];
 
     const exists = current.find((m) => m.id === movie.id);
-    let updated: Movie[];
-
-    if (exists) {
-      updated = current.filter((m) => m.id !== movie.id);
-      setIsFavorite(false);
-    } else {
-      updated = [...current, movie];
-      setIsFavorite(true);
-    }
+    const updated = exists
+      ? current.filter((m) => m.id !== movie.id)
+      : [...current, movie];
 
     localStorage.setItem("favoriteMovies", JSON.stringify(updated));
+    setIsFavorite(!exists);
   };
   
   

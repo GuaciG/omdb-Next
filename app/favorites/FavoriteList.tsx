@@ -1,7 +1,7 @@
 "use client";
 
 import FavoriteItem from "./FavoriteItem";
-import { UiMovie } from "./page";
+import { UiMovie } from "../../types/ui";
 
 interface FavoriteListProps {
   movies: UiMovie[];
