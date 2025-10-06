@@ -5,12 +5,12 @@
   --foreground: #171717;
 }
 
-@theme inline {
+/* @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
+} */
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -21,7 +21,7 @@
 
 body {
   background-color: var(--foreground);
-  background: url("https://res.cloudinary.com/drpcjt13x/image/upload/v1755798969/photo-cinema_vvpexz.jpg")
+  background: url("https://res.cloudinary.com/drpcjt13x/image/upload/v1755798969/Proyectos/OMDb%20Next%20API/photo-cinema_vvpexz.jpg")
     no-repeat center center fixed;
   background-size: cover;
   
