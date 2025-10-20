@@ -32,8 +32,8 @@ export default function IntroNote() {
           ×
         </button>
 
-        <h2 className="text-2xl font-bold mb-3">🎬 Welcome to Movie Finder</h2>
-        <p className="text-lg leading-relaxed">
+        <h2 className="text-xl md:text-2xl font-bold mb-3">🎬 Welcome to Movie Finder</h2>
+        <p className="text-base md:text-lg leading-relaxed">
           This is a very easy-to-use app.  
           It allows you to search for any movie by typing any word in its title.  
           <br/>✅You can also mark movies as{" "}

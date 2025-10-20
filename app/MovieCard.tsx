@@ -76,7 +76,7 @@ export default function MovieCard({ movie, query }: { movie: UiMovie; query: str
       <div className="bottom-2 right-2 group relative">
         <button
             onClick={toggleFavorite}
-            className="absolute bottom-1.5 right-1 p-1 rounded-full text-white bg-gray-700"
+            className="absolute bottom-1.5 right-1 p-2 md:p-1 rounded-full text-white bg-gray-700"
           >
             {isFavorite ? "❤️" : "🤍"}
           </button>
