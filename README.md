@@ -1,4 +1,4 @@
-# Movie App with Nextjs 15 and deployed on Vercel
+# Movie App with Nextjs 15, Tailwindcss and deployed on Vercel
 
 A very easy to use app where you can search for movies using a search engine. Type any word that contains the title and hit search. All movies related to that word will appear.
 
