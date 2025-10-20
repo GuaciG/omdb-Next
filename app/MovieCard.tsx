@@ -36,7 +36,7 @@ export default function MovieCard({ movie, query }: { movie: UiMovie; query: str
       updated = current.filter((m) => m.id !== movie.id);
       setIsFavorite(false);
     } else {
-      updated = [...current, movie]; // ✅ keep the movie object
+      updated = [...current, movie]; // keep the movie object
       setIsFavorite(true);
     }
 
