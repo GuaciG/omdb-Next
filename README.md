@@ -2,6 +2,8 @@
 
 A very easy to use app where you can search for movies using a search engine. Type any word that contains the title and hit search. All movies related to that word will appear.
 
+![Movie Finder App](https://res.cloudinary.com/drpcjt13x/image/upload/v1761044020/Proyectos/OMDb%20Next%20API/movie-finder-preview_ldhk21.jpg)
+
 ## Onboarding 
 
 When you visit this page for the first time, an overlay with instructions for use will show. Close this window and it will not appear again in the future.
